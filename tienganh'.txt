@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Học Tiếng Anh</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        width: 350px;
+        text-align: center;
+    }
+
+    input {
+        width: 90%;
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        background: #0078d7;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #005fa3;
+    }
+
+    #lesson {
+        display: none;
+    }
+
+    .word {
+        background: #eef;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Form đăng nhập -->
+    <div id="login">
+        <h2>Đăng nhập</h2>
+        <input type="text" id="username" placeholder="Tên đăng nhập">
+        <input type="password" id="password" placeholder="Mật khẩu">
+        <button onclick="login()">Đăng nhập</button>
+        <p id="message"></p>
+    </div>
+
+    <!-- Nội dung học tiếng Anh -->
+    <div id="lesson">
+        <h2>Bài học tiếng Anh</h2>
+
+        <div class="word">
+            <b>Apple</b> = Quả táo 🍎
+        </div>
+
+        <div class="word">
+            <b>Book</b> = Quyển sách 📚
+        </div>
+
+        <div class="word">
+            <b>Computer</b> = Máy tính 💻
+        </div>
+
+        <button onclick="logout()">Đăng xuất</button>
+    </div>
+
+</div>
+
+<script>
+function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    // Tài khoản mẫu
+    if(username === "admin" && password === "123456") {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("lesson").style.display = "block";
+    } else {
+        document.getElementById("message").innerHTML =
+            "<span style='color:red'>Sai tài khoản hoặc mật khẩu!</span>";
+    }
+}
+
+function logout() {
+    document.getElementById("lesson").style.display = "none";
+    document.getElementById("login").style.display = "block";
+}
+</script>
+
+</body>
+</html>
