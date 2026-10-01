@@ -3,155 +3,269 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Learning App</title>
- 
+
+<title>English Master</title>
+
+<link href="https://fontscom/css2?family=Poppins:wght@300;400;500;600;700&display=swap
+
 <style>
+
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial,sans-serif;
+font-family:'Poppins',sans-serif;
 }
- 
+
 body{
-background:#f4f7fc;
+background:linear-gradient(135deg,#4f46e5,#7c3aed);
+min-height:100vh;
+padding:30px;
 }
- 
+
 .container{
-width:90%;
-max-width:800px;
-margin:30px auto;
-background:white;
-padding:20px;
-border-radius:15px;
-box-shadow:0 0 20px rgba(0,0,0,0.1);
+max-width:1200px;
+margin:auto;
 }
- 
-h1,h2{
+
+.glass{
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,.2);
+border-radius:25px;
+padding:25px;
+color:white;
+box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+h1{
 text-align:center;
-margin-bottom:20px;
+margin-bottom:25px;
 }
- 
+
 input{
 width:100%;
-padding:10px;
+padding:14px;
 margin:10px 0;
-border:1px solid #ccc;
-border-radius:8px;
-}
- 
-button{
-width:100%;
-padding:12px;
 border:none;
-border-radius:8px;
-background:#0078ff;
-color:white;
+border-radius:12px;
+outline:none;
+}
+
+button{
+padding:12px 25px;
+border:none;
+border-radius:12px;
 cursor:pointer;
-margin-top:10px;
+font-weight:bold;
+background:#fbbf24;
+color:black;
+transition:.3s;
 }
- 
+
 button:hover{
-background:#005fd1;
+transform:translateY(-3px);
 }
- 
+
 .hidden{
 display:none;
 }
- 
-.card{
-background:#f0f4ff;
-padding:15px;
-margin:10px 0;
-border-radius:10px;
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
 }
- 
-.option{
-background:#eee;
-padding:10px;
-margin:8px 0;
-cursor:pointer;
-border-radius:8px;
-}
- 
-.option:hover{
-background:#dbe6ff;
-}
- 
-.score-box{
-font-size:20px;
+
+.avatar{
+width:60px;
+height:60px;
+border-radius:50%;
+background:white;
+color:#4f46e5;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:25px;
 font-weight:bold;
-color:green;
-text-align:center;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
 margin-top:20px;
 }
+
+.card{
+background:white;
+color:#333;
+border-radius:20px;
+padding:20px;
+box-shadow:0 10px 25px rgba(0,0,0,.1);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+}
+
+.progress{
+height:20px;
+background:#ddd;
+border-radius:20px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.progress-bar{
+height:100%;
+width:70%;
+background:linear-gradient(90deg,#10b981,#22c55e);
+}
+
+.word{
+background:white;
+padding:20px;
+border-radius:15px;
+margin:10px 0;
+color:#333;
+}
+
+.option{
+background:#f1f5f9;
+padding:12px;
+margin:10px 0;
+border-radius:10px;
+cursor:pointer;
+}
+
+.option:hover{
+background:#dbeafe;
+}
+
+.score{
+font-size:30px;
+font-weight:bold;
+text-align:center;
+padding:20px;
+background:white;
+border-radius:15px;
+color:#10b981;
+}
+
 </style>
 </head>
- 
+
 <body>
- 
+
 <div class="container">
- 
-<h1>📚 English Learning App</h1>
- 
-<!-- AUTH -->
-<div id="auth">
- 
-<h2>Đăng ký</h2>
- 
-<input type="text" id="regUser" placeholder="Tên đăng nhập">
- 
-<input type="password" id="regPass" placeholder="Mật khẩu">
- 
+
+<div id="loginBox" class="glass">
+
+<h1>📚 English Master</h1>
+
+<h3>Đăng ký</h3>
+
+<input id="regUser" placeholder="Tên tài khoản">
+
+<input id="regPass" type="password" placeholder="Mật khẩu">
+
 <button onclick="register()">Đăng ký</button>
- 
-<hr style="margin:20px 0">
- 
-<h2>Đăng nhập</h2>
- 
-<input type="text" id="loginUser" placeholder="Tên đăng nhập">
- 
-<input type="password" id="loginPass" placeholder="Mật khẩu">
- 
+
+<br><br>
+
+<h3>Đăng nhập</h3>
+
+<input id="loginUser" placeholder="Tên tài khoản">
+
+<input id="loginPass" type="password" placeholder="Mật khẩu">
+
 <button onclick="login()">Đăng nhập</button>
- 
-<p id="msg"></p>
- 
+
 </div>
- 
-<!-- DASHBOARD -->
+
 <div id="dashboard" class="hidden">
- 
-<h2>Xin chào <span id="username"></span></h2>
- 
-<p>
-🏆 Điểm cao nhất:
+
+<div class="glass">
+
+<div class="topbar">
+
+<div>
+<h2>Xin chào 👋</h2>
+<h3 id="userName"></h3>
+</div>
+
+<div class="avatar">E</div>
+
+</div>
+
+<h3>🏆 Điểm cao nhất:
 <span id="bestScore">0</span>
-</p>
- 
+</h3>
+
+<h3 style="margin-top:15px;">
+⭐ XP Progress
+</h3>
+
+<div class="progress">
+<div class="progress-bar"></div>
+</div>
+
+<div class="cards">
+
+<div class="card">
+<h3>📖 Vocabulary</h3>
+<p>Học từ vựng thông dụng</p>
+<br>
 <button onclick="showVocabulary()">
-Học từ vựng
+Học ngay
 </button>
- 
+</div>
+
+<div class="card">
+<h3>📝 Quiz</h3>
+<p>Kiểm tra kiến thức</p>
+<br>
 <button onclick="startQuiz()">
-Làm Quiz
+Làm bài
 </button>
- 
+</div>
+
+<div class="card">
+<h3>🔥 Streak</h3>
+<p>15 ngày liên tiếp</p>
+</div>
+
+<div class="card">
+<h3>🏅 Rank</h3>
+<p>Gold Learner</p>
+</div>
+
+</div>
+
+<br>
+
 <button onclick="logout()">
 Đăng xuất
 </button>
- 
+
+</div>
+
+<br>
+
 <div id="content"></div>
- 
+
 </div>
- 
+
 </div>
- 
+
 <script>
- 
+
 let currentUser="";
- 
-const vocab=[
+
+const vocabulary=[
 {
 word:"Apple",
 meaning:"Quả táo"
@@ -161,145 +275,130 @@ word:"Computer",
 meaning:"Máy tính"
 },
 {
-word:"Book",
-meaning:"Quyển sách"
-},
-{
 word:"Teacher",
 meaning:"Giáo viên"
 },
 {
 word:"School",
 meaning:"Trường học"
+},
+{
+word:"Friend",
+meaning:"Bạn bè"
 }
 ];
- 
+
 const questions=[
 {
-question:"Apple nghĩa là gì?",
-options:[
-"Con mèo",
-"Máy tính",
-"Quả táo",
-"Ngôi nhà"
-],
-answer:"Quả táo"
+q:"Apple nghĩa là gì?",
+a:["Máy tính","Quả táo","Con mèo","Ngôi nhà"],
+correct:"Quả táo"
 },
- 
 {
-question:"Computer nghĩa là gì?",
-options:[
-"Máy tính",
-"Giáo viên",
-"Con chó",
-"Xe máy"
-],
-answer:"Máy tính"
+q:"Teacher nghĩa là gì?",
+a:["Giáo viên","Bác sĩ","Học sinh","Kỹ sư"],
+correct:"Giáo viên"
 },
- 
 {
-question:"Teacher nghĩa là gì?",
-options:[
-"Học sinh",
-"Giáo viên",
-"Bác sĩ",
-"Kỹ sư"
-],
-answer:"Giáo viên"
+q:"Computer nghĩa là gì?",
+a:["Máy tính","Xe máy","Điện thoại","Con chó"],
+correct:"Máy tính"
 }
 ];
- 
+
 function register(){
- 
+
 let user=document.getElementById("regUser").value;
 let pass=document.getElementById("regPass").value;
- 
-if(user==""||pass==""){
+
+if(!user || !pass){
 alert("Nhập đầy đủ thông tin");
 return;
 }
- 
+
 localStorage.setItem(
 "user_"+user,
 JSON.stringify({
 password:pass,
-bestScore:0
+score:0
 })
 );
- 
+
 alert("Đăng ký thành công");
 }
- 
+
 function login(){
- 
+
 let user=document.getElementById("loginUser").value;
 let pass=document.getElementById("loginPass").value;
- 
+
 let data=localStorage.getItem("user_"+user);
- 
+
 if(!data){
-alert("Tài khoản không tồn tại");
+alert("Không tồn tại tài khoản");
 return;
 }
- 
+
 data=JSON.parse(data);
- 
+
 if(data.password!==pass){
 alert("Sai mật khẩu");
 return;
 }
- 
+
 currentUser=user;
- 
-document.getElementById("auth").classList.add("hidden");
+
+document.getElementById("loginBox").classList.add("hidden");
 document.getElementById("dashboard").classList.remove("hidden");
- 
-document.getElementById("username").innerText=user;
- 
-document.getElementById("bestScore").innerText=data.bestScore;
+
+document.getElementById("userName").innerText=user;
+document.getElementById("bestScore").innerText=data.score;
+
 }
- 
+
 function logout(){
- 
-currentUser="";
- 
+
 document.getElementById("dashboard").classList.add("hidden");
-document.getElementById("auth").classList.remove("hidden");
- 
+document.getElementById("loginBox").classList.remove("hidden");
 document.getElementById("content").innerHTML="";
+
 }
- 
+
 function showVocabulary(){
- 
-let html="<h2>Từ Vựng</h2>";
- 
-vocab.forEach(v=>{
- 
+
+let html=`<div class="glass"><h2>📖 Danh sách từ vựng</h2>`;
+
+vocabulary.forEach(v=>{
+
 html+=`
-<div class="card">
+<div class="word">
 <h3>${v.word}</h3>
 <p>${v.meaning}</p>
 </div>
 `;
- 
+
 });
- 
+
+html+="</div>";
+
 document.getElementById("content").innerHTML=html;
 }
- 
+
 function startQuiz(){
- 
-let html="<h2>Quiz</h2>";
- 
-questions.forEach((q,index)=>{
- 
-html+=`
-<div class="card">
-<h3>${q.question}</h3>
+
+let html=`<div class="glass">
+<h2>📝 Quiz</h2>
 `;
- 
-q.options.forEach(op=>{
- 
+
+questions.forEach((q,index)=>{
+
+html+=`
+<div class="word">
+<h3>${q.q}</h3>
+`;
+
+q.a.forEach(op=>{
+
 html+=`
 <label>
 <input
@@ -307,71 +406,70 @@ type="radio"
 name="q${index}"
 value="${op}">
 ${op}
-</label><br>
+</label><br><br>
 `;
- 
+
 });
- 
-html+="</div>";
- 
+
+html+=`</div>`;
 });
- 
+
 html+=`
-<button onclick="submitQuiz()">
+<button onclick="finishQuiz()">
 Nộp bài
 </button>
-`;
- 
-document.getElementById("content").innerHTML=html;
-}
- 
-function submitQuiz(){
- 
-let score=0;
- 
-questions.forEach((q,index)=>{
- 
-let selected=document.querySelector(
-`input[name="q${index}"\]:checked`
-);
- 
-if(selected){
- 
-if(selected.value===q.answer){
-score++;
-}
- 
-}
- 
-});
- 
-let result=`
-<div class="score-box">
-🎯 Điểm của bạn:
-${score}/${questions.length}
 </div>
 `;
- 
-document.getElementById("content").innerHTML=result;
- 
-let userData=JSON.parse(
+
+document.getElementById("content").innerHTML=html;
+}
+
+function finishQuiz(){
+
+let score=0;
+
+questions.forEach((q,index)=>{
+
+let ans=document.querySelector(
+`input[name='q${index}'\]:checked`
+);
+
+if(ans && ans.value===q.correct){
+score++;
+}
+
+});
+
+let user=JSON.parse(
 localStorage.getItem("user_"+currentUser)
 );
- 
-if(score>userData.bestScore){
- 
-userData.bestScore=score;
- 
+
+if(score>user.score){
+user.score=score;
+
 localStorage.setItem(
 "user_"+currentUser,
-JSON.stringify(userData)
+JSON.stringify(user)
 );
 }
- 
-document.getElementById("bestScore").innerText=
-userData.bestScore;
+
+document.getElementById("bestScore").innerText=user.score;
+
+document.getElementById("content").innerHTML=
+`
+<div class="glass">
+<div class="score">
+🎉 ${score}/${questions.length}
+</div>
+</div>
+`;
+
 }
+
 </script>
+
+</body>
+</html>
  
 </body>
 </html>
