@@ -3,113 +3,375 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English test</title>
+<title>English Learning App</title>
+ 
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #f4f4f4;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-
-    .container {
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        width: 350px;
-        text-align: center;
-    }
-
-    input {
-        width: 90%;
-        padding: 10px;
-        margin: 8px 0;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    button {
-        background: #0078d7;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background: #005fa3;
-    }
-
-    #lesson {
-        display: none;
-    }
-
-    .word {
-        background: #eef;
-        padding: 10px;
-        margin: 10px 0;
-        border-radius: 5px;
-    }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+ 
+body{
+background:#f4f7fc;
+}
+ 
+.container{
+width:90%;
+max-width:800px;
+margin:30px auto;
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 0 20px rgba(0,0,0,0.1);
+}
+ 
+h1,h2{
+text-align:center;
+margin-bottom:20px;
+}
+ 
+input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:8px;
+}
+ 
+button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+background:#0078ff;
+color:white;
+cursor:pointer;
+margin-top:10px;
+}
+ 
+button:hover{
+background:#005fd1;
+}
+ 
+.hidden{
+display:none;
+}
+ 
+.card{
+background:#f0f4ff;
+padding:15px;
+margin:10px 0;
+border-radius:10px;
+}
+ 
+.option{
+background:#eee;
+padding:10px;
+margin:8px 0;
+cursor:pointer;
+border-radius:8px;
+}
+ 
+.option:hover{
+background:#dbe6ff;
+}
+ 
+.score-box{
+font-size:20px;
+font-weight:bold;
+color:green;
+text-align:center;
+margin-top:20px;
+}
 </style>
 </head>
+ 
 <body>
-
+ 
 <div class="container">
-
-    <!-- Form đăng nhập -->
-    <div id="login">
-        <h2>Đăng nhập</h2>
-        <input type="text" id="username" placeholder="Tên đăng nhập">
-        <input type="password" id="password" placeholder="Mật khẩu">
-        <button onclick="login()">Đăng nhập</button>
-        <p id="message"></p>
-    </div>
-
-    <!-- Nội dung học tiếng Anh -->
-    <div id="lesson">
-        <h2>Bài học tiếng Anh</h2>
-
-        <div class="word">
-            <b>Apple</b> = Quả táo 🍎
-        </div>
-
-        <div class="word">
-            <b>Book</b> = Quyển sách 📚
-        </div>
-
-        <div class="word">
-            <b>Computer</b> = Máy tính 💻
-        </div>
-
-        <button onclick="logout()">Đăng xuất</button>
-    </div>
-
+ 
+<h1>📚 English Learning App</h1>
+ 
+<!-- AUTH -->
+<div id="auth">
+ 
+<h2>Đăng ký</h2>
+ 
+<input type="text" id="regUser" placeholder="Tên đăng nhập">
+ 
+<input type="password" id="regPass" placeholder="Mật khẩu">
+ 
+<button onclick="register()">Đăng ký</button>
+ 
+<hr style="margin:20px 0">
+ 
+<h2>Đăng nhập</h2>
+ 
+<input type="text" id="loginUser" placeholder="Tên đăng nhập">
+ 
+<input type="password" id="loginPass" placeholder="Mật khẩu">
+ 
+<button onclick="login()">Đăng nhập</button>
+ 
+<p id="msg"></p>
+ 
 </div>
-
+ 
+<!-- DASHBOARD -->
+<div id="dashboard" class="hidden">
+ 
+<h2>Xin chào <span id="username"></span></h2>
+ 
+<p>
+🏆 Điểm cao nhất:
+<span id="bestScore">0</span>
+</p>
+ 
+<button onclick="showVocabulary()">
+Học từ vựng
+</button>
+ 
+<button onclick="startQuiz()">
+Làm Quiz
+</button>
+ 
+<button onclick="logout()">
+Đăng xuất
+</button>
+ 
+<div id="content"></div>
+ 
+</div>
+ 
+</div>
+ 
 <script>
-function login() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-
-    // Tài khoản mẫu
-    if(username === "admin" && password === "123456") {
-        document.getElementById("login").style.display = "none";
-        document.getElementById("lesson").style.display = "block";
-    } else {
-        document.getElementById("message").innerHTML =
-            "<span style='color:red'>Sai tài khoản hoặc mật khẩu!</span>";
-    }
+ 
+let currentUser="";
+ 
+const vocab=[
+{
+word:"Apple",
+meaning:"Quả táo"
+},
+{
+word:"Computer",
+meaning:"Máy tính"
+},
+{
+word:"Book",
+meaning:"Quyển sách"
+},
+{
+word:"Teacher",
+meaning:"Giáo viên"
+},
+{
+word:"School",
+meaning:"Trường học"
 }
-
-function logout() {
-    document.getElementById("lesson").style.display = "none";
-    document.getElementById("login").style.display = "block";
+];
+ 
+const questions=[
+{
+question:"Apple nghĩa là gì?",
+options:[
+"Con mèo",
+"Máy tính",
+"Quả táo",
+"Ngôi nhà"
+],
+answer:"Quả táo"
+},
+ 
+{
+question:"Computer nghĩa là gì?",
+options:[
+"Máy tính",
+"Giáo viên",
+"Con chó",
+"Xe máy"
+],
+answer:"Máy tính"
+},
+ 
+{
+question:"Teacher nghĩa là gì?",
+options:[
+"Học sinh",
+"Giáo viên",
+"Bác sĩ",
+"Kỹ sư"
+],
+answer:"Giáo viên"
+}
+];
+ 
+function register(){
+ 
+let user=document.getElementById("regUser").value;
+let pass=document.getElementById("regPass").value;
+ 
+if(user==""||pass==""){
+alert("Nhập đầy đủ thông tin");
+return;
+}
+ 
+localStorage.setItem(
+"user_"+user,
+JSON.stringify({
+password:pass,
+bestScore:0
+})
+);
+ 
+alert("Đăng ký thành công");
+}
+ 
+function login(){
+ 
+let user=document.getElementById("loginUser").value;
+let pass=document.getElementById("loginPass").value;
+ 
+let data=localStorage.getItem("user_"+user);
+ 
+if(!data){
+alert("Tài khoản không tồn tại");
+return;
+}
+ 
+data=JSON.parse(data);
+ 
+if(data.password!==pass){
+alert("Sai mật khẩu");
+return;
+}
+ 
+currentUser=user;
+ 
+document.getElementById("auth").classList.add("hidden");
+document.getElementById("dashboard").classList.remove("hidden");
+ 
+document.getElementById("username").innerText=user;
+ 
+document.getElementById("bestScore").innerText=data.bestScore;
+}
+ 
+function logout(){
+ 
+currentUser="";
+ 
+document.getElementById("dashboard").classList.add("hidden");
+document.getElementById("auth").classList.remove("hidden");
+ 
+document.getElementById("content").innerHTML="";
+}
+ 
+function showVocabulary(){
+ 
+let html="<h2>Từ Vựng</h2>";
+ 
+vocab.forEach(v=>{
+ 
+html+=`
+<div class="card">
+<h3>${v.word}</h3>
+<p>${v.meaning}</p>
+</div>
+`;
+ 
+});
+ 
+document.getElementById("content").innerHTML=html;
+}
+ 
+function startQuiz(){
+ 
+let html="<h2>Quiz</h2>";
+ 
+questions.forEach((q,index)=>{
+ 
+html+=`
+<div class="card">
+<h3>${q.question}</h3>
+`;
+ 
+q.options.forEach(op=>{
+ 
+html+=`
+<label>
+<input
+type="radio"
+name="q${index}"
+value="${op}">
+${op}
+</label><br>
+`;
+ 
+});
+ 
+html+="</div>";
+ 
+});
+ 
+html+=`
+<button onclick="submitQuiz()">
+Nộp bài
+</button>
+`;
+ 
+document.getElementById("content").innerHTML=html;
+}
+ 
+function submitQuiz(){
+ 
+let score=0;
+ 
+questions.forEach((q,index)=>{
+ 
+let selected=document.querySelector(
+`input[name="q${index}"\]:checked`
+);
+ 
+if(selected){
+ 
+if(selected.value===q.answer){
+score++;
+}
+ 
+}
+ 
+});
+ 
+let result=`
+<div class="score-box">
+🎯 Điểm của bạn:
+${score}/${questions.length}
+</div>
+`;
+ 
+document.getElementById("content").innerHTML=result;
+ 
+let userData=JSON.parse(
+localStorage.getItem("user_"+currentUser)
+);
+ 
+if(score>userData.bestScore){
+ 
+userData.bestScore=score;
+ 
+localStorage.setItem(
+"user_"+currentUser,
+JSON.stringify(userData)
+);
+}
+ 
+document.getElementById("bestScore").innerText=
+userData.bestScore;
 }
 </script>
-
+ 
 </body>
 </html>
